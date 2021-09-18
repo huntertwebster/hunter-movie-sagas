@@ -8,33 +8,32 @@ import { useHistory } from 'react-router';
 function MovieList() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const movies = useSelector(store => store.movieReducer);
+    const movieList = useSelector(store => store.movieReducer);
+    
+
+    const setMovieDetails = (movie) => {
+        dispatch({
+            type: 'SET_MOVIES',
+            payload: movie,
+        });
+        history.push('/details');
+    }
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
-
-
-    // function to use the onClick on the div to send user to /description
-    let details = (event) => {
-        movies.find(movie => {movie.id
-            history.push(`/details/${event.target.id}`)
-            });
-    }
-    
-    
 
     return (
         <main>
             <h1>MovieList</h1>
                 <NavLink to='/add'>Add your own movie</NavLink>
             <section className="movies">
-                {movies.map(movie => {
+                {movieList.map(movie => {
                     return (
                         <div className="singlePoster" key={movie.id}>
                             <h3>{movie.title}</h3>
                             <p> {movie.description}</p>
-                            <img src={movie.poster} alt={movie.title} onClick={details}/>
+                            <img src={movie.poster} alt={movie.title} onClick={() => setMovieDetails(movie)} />
                         </div>
                     );
                 })}
