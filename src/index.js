@@ -11,7 +11,7 @@ import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
 import axios from 'axios';
 
-
+//SAGAS//
 
 ////////////// MOVIES/////////////////////
 
@@ -19,7 +19,7 @@ function* fetchAllMovies() {
     // get all movies from the DB
     try {
         const movies = yield axios.get('/api/movie');
-        // console.log('get all:', movies.data);
+        console.log('get all MOVIES:', movies.data);
         yield put({ type: 'SET_MOVIES', payload: movies.data });
 
     } catch {
@@ -33,12 +33,11 @@ function* addMovie(action) {
     try {
         yield axios.post('/api/movie', action.payload);
         yield put({ type: 'FETCH_MOVIES' });
+        yield put({ type: 'FETCH_GENRES' })
     } catch (err) {
         console.log("Error FETCHING MOVIES for post", err);
     }
 };
-
-
 
 ////////////GENRES/////////////////
 
@@ -46,18 +45,33 @@ function* fetchAllGenres() {
     // get all genres from the DB
     try {
         const genres = yield axios.get('/api/genre');
-        console.log('get all:', genres.data);
+        console.log('get all GENRES:', genres.data);
         yield put({ type: 'SET_GENRES', payload: genres.data });
 
     } catch {
-        console.log('get all error');
+        console.log('get all GENRES error');
     }
+};
 
+function* addGenre(action) {
+    console.log("----Inside the ADD_GENRE SAGA----", action);
+    try {
+        yield axios.post('/api/genre', action.payload);
+        yield put({ type: 'FETCH_GENRES' });
+    } catch (err) {
+        console.log("Error FETCHING GENRES for post", err);
+    }
 };
 
 
 
+
+
+
+
+
 ////////////REDUCERS///////////////////
+
 const movieDetailsReducer = (state = {}, action) => {
     if (action.type === 'SET_MOVIE_DETAILS') {
         return { ...action.payload };
@@ -92,6 +106,7 @@ function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
     yield takeEvery('FETCH_GENRES', fetchAllGenres);
     yield takeEvery('ADD_MOVIE', addMovie);
+    yield takeEvery('ADD_GENRE', addGenre)
 };
 
 // Create sagaMiddleware

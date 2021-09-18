@@ -5,7 +5,8 @@
 
 .singlePoster {
     display: flex;
-    width: 200px;
-    height: 200px;
-    margin: 20px;
+    width: 175px;
+    height: 175px;
+    margin: 27px;
+    padding-top: 30px;
 }

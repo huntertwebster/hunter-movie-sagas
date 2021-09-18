@@ -5,57 +5,37 @@ import { useHistory } from "react-router";
 export default function AddMovies() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const movies = useSelector(store => store.movieListReducer)
-    const genres = useSelector(store => store.genreReducer)
-    const [title, setTitle] = useState('');
-    const [poster, setPoster] = useState('');
-    const [description, setDescription] = useState('');
-    const [genre, setGenre] = useState('');
-
+    const genres = useSelector(store => store.genreListReducer)
+    // const [title, setTitle] = useState('');
+    // const [poster, setPoster] = useState('');
+    // const [description, setDescription] = useState('');
+    // const [genre, setGenre] = useState('');
+    const [inputMovie, setInputMovie] = useState({ title: '', poster: '', description: '', genre_id:0 });
+    
     // sends user back to home page
     let cancel = () => {
         history.push('/')
-    }
+    };
 
 // saves inputs in the DB and sends user back to home page
     let save = () => {
         history.push('/')
-    }
-
-    function addNewMovie(action) {
-        console.log('this is the action FOR MOVIE HANDLER!!!:', action);
-        dispatch({
-            type: 'ADD_MOVIE',
-            // needs body because this is a post!
-            payload: {
-                title: title,
-                poster: poster,
-                description: description,
-                genre: genre
-            }
-        })
-    }
+    };
 
     const handleSubmit = (event) => {
-        console.log("Search input is,", title);
-        console.log("Search input is,", poster);
-        console.log("Search input is,", description);
+        // console.log("Title input is:", title);
+        // console.log("Poster input is:", poster);
+        // console.log("Description input is:", description);
+        // console.log("Genre input is:", genre);
         event.preventDefault();
 
         dispatch({
             type: 'ADD_MOVIE',
-            payload: {
-                title: title,
-                poster: poster,
-                description: description,
-                genre: genre
-            }
+            payload: inputMovie    
         })
-        // to clear our inputs
-        setTitle('');
-        setPoster('');
-        setDescription('');
+        setInputMovie('');
     };
+
 
 
     return (
@@ -64,32 +44,33 @@ export default function AddMovies() {
             <h2>Add a movie!</h2>
             <form onSubmit={handleSubmit}>
 
-            {/* TITLE */}
-            <input onChange={(event) => setTitle(event.target.value)}
-                required type="text" placeholder="Movie title!" value={title}
-            ></input>
-
-            {/* POSTER (url) */}
-            <input onChange={(event) => setPoster(event.target.value)}
-                required type="text" placeholder="URL for the poster!" value={poster}
-            ></input>
-     
-                {/* DESCRIPTION */}
-             
-            <input onChange={(event) => setDescription(event.target.value)}
-                required type="text" placeholder="Give a description!" value={description}
-            ></input>
-
-            {/* GENRE DROPDOWN */}
-            {/* <select onChange={event}>
-                {genres.map((genre, i) => <option key={i} value={genre.id}>
-                    {genre.name}
-                </option>)}
-            </select> */}
-
-            <button type='submit' value="Submit">Add Movie</button>
-            <button onClick={cancel}>Cancel</button>
-            <button onClick={save}>Save</button>
+            {/* MOVIE */}
+                <input onChange={(event) => setInputMovie({ ...inputMovie, title: event.target.value })}
+                    type='text' placeholder='Movie title!' value={inputMovie.title} />
+                <input onChange={(event) => setInputMovie({ ...inputMovie, poster: event.target.value })}
+                    type='text' placeholder='URL for the poster!' value={inputMovie.poster} />
+                <input onChange={(event) => setInputMovie({ ...inputMovie, description: event.target.value })}
+                    type='text' placeholder='Give a description!' value={inputMovie.description} />
+                
+            {/* GENRE */}
+            <select value={inputMovie.genre_id} onChange={(event)=> setInputMovie({...inputMovie, genre_id:event.target.value})}>
+            <option value={"Adventure"}>Adventure</option>
+            <option value={"Animated"}>Animated</option>
+            <option value={"Biographical"}>Biographical</option>
+            <option value={"Comedy"}>Comedy</option>
+            <option value={"Disaster"}>Disaster</option>
+            <option value={"Drama"}>Drama</option>
+            <option value={"Epic"}>Epic</option>
+            <option value={"Fantasy"}>Fantasy</option>
+            <option value={"Musical"}>Musical</option>
+            <option value={"Romantic"}>Romantic</option>
+            <option value={"Science Fiction"}>Science Fiction</option>
+            <option value={"Space-Opera"}>Space-Opera</option>
+            <option value={"Superhero"}>Superhero</option>
+            
+            </select>
+            <button onClick={cancel}>Cancel</button> 
+            <button onClick={save} type="submit"  value="Submit">Save</button> 
             </form>
         </div>
     
