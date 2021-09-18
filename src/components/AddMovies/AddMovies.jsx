@@ -1,13 +1,25 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { useHistory } from "react-router";
+
 export default function AddMovies() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movieReducer)
     const genres = useSelector(store => store.genreReducer)
     const [title, setTitle] = useState('');
     const [poster, setPoster] = useState('');
     const [description, setDescription] = useState('');
+
+    // sends user back to home page
+    let cancel = () => {
+        history.push('/')
+    }
+
+// saves inputs in the DB and sends user back to home page
+    let save = () => {
+        history.push('/')
+    }
 
     function movieHandler(action) {
         console.log('this is the action FOR MOVIE HANDLER!!!:', action);
@@ -45,6 +57,8 @@ export default function AddMovies() {
             </select>
 
             <button onClick={() => movieHandler(movie)}>Add</button>
+            <button onClick={cancel}>Cancel</button>
+            <button onClick={save}>Save</button>
         </div>
     
         
