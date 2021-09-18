@@ -5,42 +5,52 @@ import './MovieList.css'
 import { useHistory } from 'react-router';
 
 
-function MovieList() {
+export default function MovieList() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const movieList = useSelector(store => store.movieReducer);
-    
+    const movies = useSelector(store => store.movieListReducer);
+    // debugger;
+    console.log(movies);
+    // used for when clicked on a poster, movie data is recieved 
+    // sends us to /details too
 
     const setMovieDetails = (movie) => {
         dispatch({
-            type: 'SET_MOVIES',
+            type: 'SET_MOVIE_DETAILS',
             payload: movie,
         });
         history.push('/details');
     }
+    console.log(movies);
+    
 
+    // when page loads, get all the movies
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
+
+console.log(movies);
     return (
         <main>
             <h1>MovieList</h1>
-                <NavLink to='/add'>Add your own movie</NavLink>
+            <NavLink to='/form'>Add your own movie</NavLink>
+            
             <section className="movies">
-                {movieList.map(movie => {
+             
+                {movies.map(movie => {
+                    console.log(movies);
                     return (
                         <div className="singlePoster" key={movie.id}>
                             <h3>{movie.title}</h3>
-                            <p> {movie.description}</p>
+                            
                             <img src={movie.poster} alt={movie.title} onClick={() => setMovieDetails(movie)} />
                         </div>
                     );
+                    console.log(movies);
                 })}
             </section>
         </main>
 
     );
 }
-
-export default MovieList;

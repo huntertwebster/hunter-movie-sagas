@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 export default function AddMovies() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const movies = useSelector(store => store.movieReducer)
+    const movies = useSelector(store => store.movieListReducer)
     const genres = useSelector(store => store.genreReducer)
     const [title, setTitle] = useState('');
     const [poster, setPoster] = useState('');
@@ -21,13 +21,16 @@ export default function AddMovies() {
         history.push('/')
     }
 
-    function movieHandler(action) {
+    function addNewMovie(action) {
         console.log('this is the action FOR MOVIE HANDLER!!!:', action);
         dispatch({
             type: 'ADD_MOVIE',
             payload: action.payload
         })
     }
+
+
+
 
 
 
@@ -50,7 +53,7 @@ export default function AddMovies() {
             ></input>
 
             {/* GENRE DROPDOWN */}
-            <select onChange={(event)}>
+            <select onChange={event}>
                 {genres.map((genre, i) => <option key={i} value={genre.id}>
                     {genre.name}
                 </option>)}

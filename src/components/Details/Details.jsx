@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 
 export default function Details() {
     const history = useHistory();
-     const movieList = useSelector(store => store.movieReducer);
+    const movie = useSelector(store => store.movieDetailsReducer);
         
         
         
@@ -13,7 +13,9 @@ export default function Details() {
 
     return (
         <>
-        <h1>hi! welcome to details!</h1>
+            <h2>{movie.title}</h2>
+            <img src={movie.poster} alt={movie.title} />
+            <p>{movie.description}</p>
             <button onClick={returnHome}>Back to list</button>
         </>
     );

@@ -2,7 +2,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList'
 import Details from '../Details/Details';
-import AddMovies from '../AddMovies/AddMovies';
+import MovieForm from '../MovieForm/MovieForm';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <h1>The Movies Saga!</h1>
       <Router>
 
-        {/* Movie/Home page */}
+        {/* MovieList/Home page */}
         <Route path="/" exact>
           <MovieList />
         </Route>
@@ -23,9 +23,9 @@ function App() {
         </Route>
 
 
-        {/* Add Movie page */}
-        <Route path="/add">
-          <AddMovies />
+        {/* MovieForm page */}
+        <Route path="/form">
+          <MovieForm />
         </Route>
 
       </Router>
