@@ -72,13 +72,6 @@ function* addGenre(action) {
 
 ////////////REDUCERS///////////////////
 
-// const movieDetails = (state = {}, action) => {
-//     if (action.type === 'SET_GENRES') {
-//         return { ...action.payload };
-//     }
-//     return state;
-// };
-
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
     switch (action.type) {

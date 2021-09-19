@@ -3,7 +3,6 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-
 import './Details.css'
 export default function Details() {
     const dispatch = useDispatch();
@@ -28,7 +27,7 @@ export default function Details() {
 
    // Bail out early with a message if the book isnt found
     if (!movie) {
-        return <h2>Invalid Book ID</h2>;
+        return <h2>Invalid Movie ID</h2>;
     }
 
 
@@ -37,7 +36,6 @@ export default function Details() {
         <>
             <h3>Here are the movie details!</h3>
             <h2>{movie?.title}</h2>
-            
             <img className="detailsImg" src={movie?.poster} alt={movie?.title} />
             <p>{movie?.description}</p>
             <p>Genre: {(movie?.genres).join(', ')}</p>

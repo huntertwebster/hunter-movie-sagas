@@ -2,7 +2,8 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import MovieList from '../MovieList/MovieList'
 import Details from '../Details/Details';
-import MovieForm from '../MovieForm/MovieForm';
+import MovieForm from '../MovieForm/MovieForm'
+
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/form">
           <MovieForm />
         </Route>
+
       </Router>
     </div>
   );
