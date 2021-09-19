@@ -37,7 +37,6 @@ function App() {
         <Route path="/form">
           <MovieForm />
         </Route>
-
       </Router>
     </div>
   );

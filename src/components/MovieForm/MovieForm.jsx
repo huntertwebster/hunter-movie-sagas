@@ -1,68 +1,86 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { useHistory } from "react-router";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-export default function AddMovies() {
-    const history = useHistory();
+export default function MovieForm() {
+    const [title, setTitle] = useState('');
+    const [poster, setPoster] = useState('');
+    const [description, setDescription] = useState('');
+    const [genre, setGenre] = useState('');
+    const genres = useSelector(store => store.genres);
+
     const dispatch = useDispatch();
-    const [inputMovie, setInputMovie] = useState({ title: '', poster: '', description: '', genre_id:0 });
-    
-    // sends user back to home page
-    let cancel = () => {
-        history.push('/')
-    };
+    const history = useHistory();
 
-
-
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         event.preventDefault();
+        console.log(`Adding movie`, { title, poster, description, genre });
 
         dispatch({
-            type: 'ADD_MOVIE',
-            payload: inputMovie    
-        })
-        setInputMovie('');
-        history.push('/')
+            type: 'POST_MOVIE',
+            payload: {
+                title: title,
+                poster: poster,
+                description: description,
+                genre: genre
+            }
+        });
+
+        //Redirect user back to homepage
+        history.push('/');
     };
 
-
-
     return (
-        
-        <div>
-            <h2>Add a movie!</h2>
-            <form onSubmit={handleSubmit}>
+        <>
+            <section>
+                <h2>Add Movie</h2>
+                <form onSubmit={handleSubmit} className="add-movie-form">
+                    <input
+                        required
+                        placeholder="Title"
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}
+                    />
 
-            {/* MOVIEs */}
-                <input onChange={(event) => setInputMovie({ ...inputMovie, title: event.target.value })}
-                    type='text' placeholder='Movie title!' value={inputMovie.title} />
-                <input onChange={(event) => setInputMovie({ ...inputMovie, poster: event.target.value })}
-                    type='text' placeholder='URL for the poster!' value={inputMovie.poster} />
-                <input onChange={(event) => setInputMovie({ ...inputMovie, description: event.target.value })}
-                    type='text' placeholder='Give a description!' value={inputMovie.description} />
-                
-            {/* GENREs */}
-            <select value={inputMovie.genre_id} onChange={(event)=> setInputMovie({...inputMovie, genre_id:event.target.value})}>
-            <option value={"Adventure"}>Adventure</option>
-            <option value={"Animated"}>Animated</option>
-            <option value={"Biographical"}>Biographical</option>
-            <option value={"Comedy"}>Comedy</option>
-            <option value={"Disaster"}>Disaster</option>
-            <option value={"Drama"}>Drama</option>
-            <option value={"Epic"}>Epic</option>
-            <option value={"Fantasy"}>Fantasy</option>
-            <option value={"Musical"}>Musical</option>
-            <option value={"Romantic"}>Romantic</option>
-            <option value={"Science Fiction"}>Science Fiction</option>
-            <option value={"Space-Opera"}>Space-Opera</option>
-            <option value={"Superhero"}>Superhero</option>
-            
-            </select>
-            <button onClick={cancel}>Cancel</button> 
-            <button onClick={handleSubmit} type="submit"  value="Submit">Save</button> 
-            </form>
-        </div>
-    
-        
+                    <input
+                        required
+                        placeholder="Poster URL"
+                        value={poster}
+                        onChange={(event) => setPoster(event.target.value)}
+                    />
+
+                     <input
+                        required
+                        placeholder="Description"
+                        value={description}
+                        onChange={(event) => setDescription(event.target.value)}
+                    />
+
+                    <select>
+                        {genres.map(genre => (
+                            <option
+                                key={genre.name}
+                                value={genre.name}
+                                onChange={() => setGenre(value)}
+                            >
+                                {genre.name}
+
+                            </option>
+
+                        ))}
+
+                    </select>
+                    <button type="submit">
+                        Save Movie
+                    </button>
+                    <button onClick={() => history.push(`/`)}>Cancel</button>
+                </form>
+            </section>
+        </>
+
+
+
+
     );
 }
+
