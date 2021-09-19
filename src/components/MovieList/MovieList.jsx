@@ -21,20 +21,14 @@ export default function MovieList() {
     }, []);
 
 
-    const setMovieDetails = (movie) => {
-        dispatch({
-            type: 'SET_MOVIE_DETAILS',
-            payload: movie
-        });
-        history.push('/details');
-    }
+
    
 
     return (
         <main>
             <h1>Movie List</h1>
             <NavLink to='/form'>Add your own movie</NavLink>
-            Current movie: {currentMovie.title ? currentMovie.title : 'None Selected'}
+            
             
             <section className="movies">
                 {movies.map(movie => {
