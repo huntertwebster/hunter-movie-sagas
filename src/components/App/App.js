@@ -3,8 +3,18 @@ import './App.css';
 import MovieList from '../MovieList/MovieList'
 import Details from '../Details/Details';
 import MovieForm from '../MovieForm/MovieForm';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_MOVIES ' })
+  })
+
+
   return (
     <div className="App">
       <h1>The Movies Saga!</h1>
@@ -18,7 +28,7 @@ function App() {
 
 
         {/* Details page */}
-        <Route path="/details">
+        <Route path="/details/:movieId">
           <Details />
         </Route>
 

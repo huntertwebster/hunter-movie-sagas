@@ -5,11 +5,6 @@ import { useHistory } from "react-router";
 export default function AddMovies() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const genres = useSelector(store => store.genreListReducer)
-    // const [title, setTitle] = useState('');
-    // const [poster, setPoster] = useState('');
-    // const [description, setDescription] = useState('');
-    // const [genre, setGenre] = useState('');
     const [inputMovie, setInputMovie] = useState({ title: '', poster: '', description: '', genre_id:0 });
     
     // sends user back to home page
@@ -17,16 +12,9 @@ export default function AddMovies() {
         history.push('/')
     };
 
-// saves inputs in the DB and sends user back to home page
-    let save = () => {
-        history.push('/')
-    };
+
 
     const handleSubmit = (event) => {
-        // console.log("Title input is:", title);
-        // console.log("Poster input is:", poster);
-        // console.log("Description input is:", description);
-        // console.log("Genre input is:", genre);
         event.preventDefault();
 
         dispatch({
@@ -34,6 +22,7 @@ export default function AddMovies() {
             payload: inputMovie    
         })
         setInputMovie('');
+        history.push('/')
     };
 
 
@@ -44,7 +33,7 @@ export default function AddMovies() {
             <h2>Add a movie!</h2>
             <form onSubmit={handleSubmit}>
 
-            {/* MOVIE */}
+            {/* MOVIEs */}
                 <input onChange={(event) => setInputMovie({ ...inputMovie, title: event.target.value })}
                     type='text' placeholder='Movie title!' value={inputMovie.title} />
                 <input onChange={(event) => setInputMovie({ ...inputMovie, poster: event.target.value })}
@@ -52,7 +41,7 @@ export default function AddMovies() {
                 <input onChange={(event) => setInputMovie({ ...inputMovie, description: event.target.value })}
                     type='text' placeholder='Give a description!' value={inputMovie.description} />
                 
-            {/* GENRE */}
+            {/* GENREs */}
             <select value={inputMovie.genre_id} onChange={(event)=> setInputMovie({...inputMovie, genre_id:event.target.value})}>
             <option value={"Adventure"}>Adventure</option>
             <option value={"Animated"}>Animated</option>
@@ -70,7 +59,7 @@ export default function AddMovies() {
             
             </select>
             <button onClick={cancel}>Cancel</button> 
-            <button onClick={save} type="submit"  value="Submit">Save</button> 
+            <button onClick={handleSubmit} type="submit"  value="Submit">Save</button> 
             </form>
         </div>
     
