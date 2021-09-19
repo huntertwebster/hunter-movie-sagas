@@ -37,10 +37,10 @@ export default function Details() {
         <>
             <h3>Here are the movie details!</h3>
             <h2>{movie?.title}</h2>
-            <h1>{movie?.genres.length}</h1>
+            
             <img className="detailsImg" src={movie?.poster} alt={movie?.title} />
             <p>{movie?.description}</p>
-            
+            <p>Genre: {(movie?.genres).join(', ')}</p>
             <button onClick={returnHome}>Back to list</button>
         </>
     );
